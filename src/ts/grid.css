@@ -1,0 +1,15 @@
+.main-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid-div {
+    width: 30%;
+}
+
+.col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
