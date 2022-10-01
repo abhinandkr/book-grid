@@ -9,16 +9,16 @@ interface Props {
 }
 
 export default function Grid(props: Props) {
-	const [bookArray, setBookArray] = useState([]);
+	const [bookList, setbookList] = useState([]);
 
 	useEffect(() => {
-		async function getBookData() {
-			const res = await axios.get('http://localhost:4000/api/bookGrid/bookData/2022');
-			const {data: {bookArray}} = res;
-			setBookArray(bookArray);
+		async function getBookList() {
+			const res = await axios.get('http://localhost:4000/api/bookGrid/readBookList/2022');
+			const {data: {bookList}} = res;
+			setbookList(bookList.slice(0, 2));
 		}
 
-		getBookData().then(() => {
+		getBookList().then(() => {
 		});
 	}, []);
 
@@ -26,10 +26,10 @@ export default function Grid(props: Props) {
 		<div className={'main-div'}>
 			<div className={'grid-div'}>
 				<Row gutter={[16, 36]}>
-					{bookArray.map((book: any) => {
+					{bookList.map((book: any) => {
 						const {isbn, myRating, title} = book;
 						return (
-							<Col className={'col'} span={6}>
+							<Col className={'col'} span={6} key={isbn}>
 								<Item isbn={isbn} rating={myRating} title={title}/>
 							</Col>
 						);
