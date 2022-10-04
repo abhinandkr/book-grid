@@ -6,22 +6,24 @@ interface Props {
 	isbn: string;
 	rating: number;
 	title: string;
+	coverArtUrl: string | null;
 }
 
 export default function Item(props: Props) {
 	const [smallThumbnail, setSmallThumbnail] = useState<string>('');
 	async function fetchBookThumbnail() {
-		console.log(props.title, props.isbn);
-
-		const res = await axios.get(`http://localhost:4000/api/bookGrid/bookThumbnail/${props.isbn}`);
-		const {data: {thumbnailUrl}} = res;
-		setSmallThumbnail(thumbnailUrl);
+		if (props.coverArtUrl) {
+			setSmallThumbnail(props.coverArtUrl);
+		} else {
+			const res = await axios.get(`http://localhost:4000/api/bookGrid/bookThumbnail/${props.isbn}`);
+			const {data: {thumbnailUrl}} = res;
+			setSmallThumbnail(thumbnailUrl);
+		}
 	}
 
 	useEffect(() => {
 		fetchBookThumbnail().then(() => {});
-	},
-	[]);
+	}, []);
 
 	const stars = [];
 	for (let i = 0; i < props.rating; i++) {
@@ -30,7 +32,7 @@ export default function Item(props: Props) {
 	}
 	return (
 		<div className={'item-div'}>
-			<img src={smallThumbnail} alt={props.title}/>
+			<img src={smallThumbnail} alt={props.title} width={128}/>
 			<div>
 				{stars}
 			</div>

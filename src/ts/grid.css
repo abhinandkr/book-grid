@@ -2,10 +2,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .grid-div {
-    width: 30%;
+    width: 35%;
 }
 
 .col {
