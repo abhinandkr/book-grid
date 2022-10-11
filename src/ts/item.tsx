@@ -10,19 +10,24 @@ interface Props {
 }
 
 export default function Item(props: Props) {
-	const [smallThumbnail, setSmallThumbnail] = useState<string>('');
+	const [thumbnailUrl, setThumbnailUrl] = useState<string>('');
+	const [googleBooksUrl, setGoogleBooksUrl] = useState<string>('');
+
 	async function fetchBookThumbnail() {
+
+		const res = await axios.get(`http://localhost:4000/api/bookGrid/bookThumbnail/${props.isbn}`);
+		const {data: {googleBookDetails: {thumbnailUrl, googleBooksUrl}}} = res;
 		if (props.coverArtUrl) {
-			setSmallThumbnail(props.coverArtUrl);
+			setThumbnailUrl(props.coverArtUrl);
 		} else {
-			const res = await axios.get(`http://localhost:4000/api/bookGrid/bookThumbnail/${props.isbn}`);
-			const {data: {thumbnailUrl}} = res;
-			setSmallThumbnail(thumbnailUrl);
+			setThumbnailUrl(thumbnailUrl);
 		}
+		setGoogleBooksUrl(googleBooksUrl);
 	}
 
 	useEffect(() => {
-		fetchBookThumbnail().then(() => {});
+		fetchBookThumbnail().then(() => {
+		});
 	}, []);
 
 	const stars = [];
@@ -32,7 +37,9 @@ export default function Item(props: Props) {
 	}
 	return (
 		<div className={'item-div'}>
-			<img src={smallThumbnail} alt={props.title} width={128}/>
+			<a href={googleBooksUrl} target={'_blank'} rel={'noopener noreferrer'}>
+				<img src={thumbnailUrl} alt={props.title} width={128}/>
+			</a>
 			<div>
 				{stars}
 			</div>
