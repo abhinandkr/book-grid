@@ -1,5 +1,6 @@
 .main-div {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding-top: 10px;
@@ -8,6 +9,7 @@
 
 .grid-div {
     width: 35%;
+    padding-bottom: 50px;
 }
 
 .col {
