@@ -1,6 +1,9 @@
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 import star from '../res/star.png';
+import React from 'react';
+// @ts-ignore
+import {BookDetails} from 'book-grid-library';
 
 interface Props {
 	isbn: string;
@@ -16,7 +19,8 @@ export default function Item(props: Props) {
 	async function fetchBookThumbnail() {
 
 		const res = await axios.get(`http://localhost:4000/api/bookGrid/bookThumbnail/${props.isbn}`);
-		const {data: {googleBookDetails: {thumbnailUrl, googleBooksUrl}}} = res;
+		// eslint-disable-next-line max-len
+		const {thumbnailUrl, googleBooksUrl}: BookDetails = res.data.googleBookDetails;
 		if (props.coverArtUrl) {
 			setThumbnailUrl(props.coverArtUrl);
 		} else {

@@ -9,13 +9,13 @@ interface Props {
 }
 
 export default function Grid(props: Props) {
-	const [bookList, setbookList] = useState([]);
+	const [bookList, setBookList] = useState([]);
 
 	useEffect(() => {
 		async function getBookList() {
-			const res = await axios.get('http://localhost:4000/api/bookGrid/readBookList/2022');
+			const res = await axios.get('http://localhost:4000/api/bookGrid/readBookList/2022/1/10');
 			const {data: {bookList}} = res;
-			setbookList(bookList);
+			setBookList(bookList);
 		}
 
 		getBookList().then(() => {
